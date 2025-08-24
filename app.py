@@ -11,7 +11,7 @@ class GDriveParts(BaseModel):
 @app.post('/documents/g_drive_parts')
 async def create_g_drive_parts(document: UploadFile) -> GDriveParts:
     # Uploads document to GCS
-    Storage().upload(file_name=document.filename, file=document)
+    Storage().upload(file_name=document.filename, file=document.file)
 
     # Hits classifier processor to get document type
     document_type = Classifier().get_document_type()
@@ -20,7 +20,7 @@ async def create_g_drive_parts(document: UploadFile) -> GDriveParts:
     extractor = Extractor(document_type)
 
     # It constructs the g_drive_file_name based on the document contents
-    g_drive_file_name = extractor.get_g_drive_file_name(document)
+    g_drive_file_name = extractor.get_g_drive_file_name(document.file)
 
     # Returns the document_type and g_drive_file_name
     response = GDriveParts(document_type=document_type, g_drive_file_name=g_drive_file_name)
