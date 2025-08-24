@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile
 from pydantic import BaseModel
+from client import Classifier, Extractor, Storage
 
 app = FastAPI()
 
@@ -9,13 +10,18 @@ class GDriveParts(BaseModel):
 
 @app.post('/documents/g_drive_parts')
 async def create_g_drive_parts(document: UploadFile) -> GDriveParts:
-    print(document.filename, 'filename')
-    print(document.content_type, 'content type')
-    # Hits classifier processor to get document type
-    # Based on the document type
-    # it sends that document to the corresponding extractor processor
-    # It constructs the g_drive_file_name based on the extracted text
-    # Returns the document_type and g_drive_file_name
+    # Uploads document to GCS
+    Storage().upload(file_name=document.filename, file=document)
 
-    response = GDriveParts(document_type='dog', g_drive_file_name='k')
+    # Hits classifier processor to get document type
+    document_type = Classifier().get_document_type()
+
+    # It chooses the right extractor based on the document_type
+    extractor = Extractor(document_type)
+
+    # It constructs the g_drive_file_name based on the document contents
+    g_drive_file_name = extractor.get_g_drive_file_name(document)
+
+    # Returns the document_type and g_drive_file_name
+    response = GDriveParts(document_type=document_type, g_drive_file_name=g_drive_file_name)
     return response
