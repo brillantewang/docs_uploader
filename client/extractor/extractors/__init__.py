@@ -1,0 +1,1 @@
+from .salary_transaction import SalaryTransactionExtractor

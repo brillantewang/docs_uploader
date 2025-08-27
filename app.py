@@ -20,7 +20,7 @@ async def create_g_drive_parts(document: UploadFile) -> GDriveParts:
     extractor = Extractor(document_type)
 
     # It constructs the g_drive_file_name based on the document contents
-    g_drive_file_name = extractor.get_g_drive_file_name(document)
+    g_drive_file_name = await extractor.get_g_drive_file_name(document)
 
     # Returns the document_type and g_drive_file_name
     response = GDriveParts(document_type=document_type, g_drive_file_name=g_drive_file_name)

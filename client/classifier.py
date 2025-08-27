@@ -1,12 +1,13 @@
 from fastapi import UploadFile
 from google.cloud.documentai import DocumentProcessorServiceAsyncClient, ProcessRequest, RawDocument
 from config import config
-from pydantic import BaseModel, Field, ConfigDict, ValidationError
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Annotated
+from client.types import DocumentType
 
 class EntityModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    type_: str
+    type_: DocumentType
 
 class DocumentModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -19,6 +20,7 @@ class ResponseModel(BaseModel):
 class Classifier:
     def __init__(self):
         self.client = DocumentProcessorServiceAsyncClient()
+        self.processor_id = config.MA_DOCS_CLASSIFIER_PROCESSOR_ID
 
     async def get_document_type(self, document: UploadFile) -> str:
         # Read the file content
@@ -30,7 +32,7 @@ class Classifier:
             mime_type=document.content_type
         )
 
-        processor_name = self.client.processor_path(config.PROJECT_ID, config.LOCATION, config.PROCESSOR_ID)
+        processor_name = self.client.processor_path(config.PROJECT_ID, config.LOCATION, self.processor_id)
         request = ProcessRequest(
             name=processor_name,
             raw_document=raw_document
