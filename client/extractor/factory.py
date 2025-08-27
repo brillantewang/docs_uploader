@@ -1,7 +1,6 @@
 from pydantic import InstanceOf
 from client.types import DocumentType
-from client.extractor.extractors import SalaryTransactionExtractor
-from client.extractor.base import BaseExtractor
+from client.extractor.extractors import BaseExtractor, SalaryTransactionExtractor
 
 class ExtractorFactory:
     def __init__(self):

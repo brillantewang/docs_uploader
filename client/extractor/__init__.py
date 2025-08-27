@@ -1,7 +1,7 @@
 from pydantic import InstanceOf
 from client.types import DocumentType
 from client.extractor.factory import factory
-from client.extractor.base import BaseExtractor
+from client.extractor.extractors import BaseExtractor
 from fastapi import UploadFile
 
 class Extractor:

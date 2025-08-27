@@ -3,7 +3,7 @@ from google.cloud.documentai import DocumentProcessorServiceAsyncClient, RawDocu
 from config import config
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Annotated, Literal
-from client.extractor.base import BaseExtractor
+from client.extractor.extractors import BaseExtractor
 import calendar
 import re
 
