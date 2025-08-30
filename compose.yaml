@@ -1,0 +1,9 @@
+services:
+  api:
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - ~/.config/gcloud:/root/.config/gcloud
+    env_file:
+      - .env
