@@ -78,7 +78,7 @@ class SalaryTransactionExtractor(BaseExtractor):
             mime_type=document.content_type
         )
 
-        processor_name = self.client.processor_path(config.PROJECT_ID, config.LOCATION, self.process_id)
+        processor_name = self.client.processor_path(config.DOCS_UPLOADER_PROJECT_ID, config.LOCATION, self.process_id)
         request = ProcessRequest(
             name=processor_name,
             raw_document=raw_document

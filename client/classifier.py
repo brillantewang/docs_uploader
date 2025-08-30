@@ -3,7 +3,7 @@ from google.cloud.documentai import DocumentProcessorServiceAsyncClient, Process
 from config import config
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Annotated
-from client.types import DocumentType
+from global_types import DocumentType
 
 class EntityModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -32,7 +32,7 @@ class Classifier:
             mime_type=document.content_type
         )
 
-        processor_name = self.client.processor_path(config.PROJECT_ID, config.LOCATION, self.processor_id)
+        processor_name = self.client.processor_path(config.DOCS_UPLOADER_PROJECT_ID, config.LOCATION, self.processor_id)
         request = ProcessRequest(
             name=processor_name,
             raw_document=raw_document
