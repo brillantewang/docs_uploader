@@ -1,7 +1,7 @@
 from fastapi import File
 from google.cloud import storage
 from google.cloud.storage import fileio
-from config import config
+from app.config import config
 
 class Storage:
     def __init__(self):

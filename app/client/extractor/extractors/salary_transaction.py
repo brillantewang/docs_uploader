@@ -1,9 +1,9 @@
 from fastapi import UploadFile
 from google.cloud.documentai import DocumentProcessorServiceAsyncClient, RawDocument, ProcessRequest
-from config import config
+from app.config import config
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Annotated, Literal
-from client.extractor.extractors import BaseExtractor
+from app.client.extractor.extractors import BaseExtractor
 import calendar
 import re
 

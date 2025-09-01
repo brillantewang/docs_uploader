@@ -1,9 +1,9 @@
 from fastapi import UploadFile
 from google.cloud.documentai import DocumentProcessorServiceAsyncClient, ProcessRequest, RawDocument
-from config import config
+from app.config import config
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Annotated
-from global_types import DocumentType
+from app.global_types import DocumentType
 
 class EntityModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)

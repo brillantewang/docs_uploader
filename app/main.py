@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile
 from pydantic import BaseModel
-from client import Classifier, Extractor, Storage, GoogleDrive
-from global_types import DocumentType
+from app.client import Classifier, Extractor, Storage, GoogleDrive
+from app.global_types import DocumentType
 
 app = FastAPI()
 

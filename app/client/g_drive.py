@@ -1,8 +1,9 @@
 from google.cloud.storage import fileio
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
-from constants import DOCUMENT_TYPE_TO_G_DRIVE_FOLDER
-from global_types import DocumentType
+from google.oauth2.credentials import Credentials
+from app.constants import DOCUMENT_TYPE_TO_G_DRIVE_FOLDER
+from app.global_types import DocumentType
 from typing import TypedDict
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -12,7 +13,8 @@ class UploadFileResponse(TypedDict):
 
 class GoogleDrive:
     def __init__(self):
-        self.client = build('drive', 'v3')
+        creds = Credentials.from_authorized_user_file('./secrets/my_oauth_token.json')
+        self.client = build('drive', 'v3', credentials=creds)
 
     def upload_file(self, file: fileio.BlobReader, output_file_name: str, document_type: DocumentType) -> UploadFileResponse:
         file_metadata = {
