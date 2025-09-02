@@ -2,8 +2,16 @@ from fastapi import FastAPI, UploadFile
 from pydantic import BaseModel
 from app.client import Classifier, Extractor, Storage, GoogleDrive
 from app.global_types import DocumentType
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"], # vite frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class GDriveParts(BaseModel):
     document_type: str
